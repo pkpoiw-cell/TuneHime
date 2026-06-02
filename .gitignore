@@ -55,7 +55,6 @@ build.bat
 build_installer.bat
 build_release.bat
 build_backend.py
-docs/
 
 # 第三方驱动
 resources/vb-cable/

@@ -8,6 +8,8 @@
 [![Platform](https://img.shields.io/badge/Platform-Windows-lightgrey.svg)](https://github.com/pkpoiw-cell/TuneHime/releases)
 [![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 
+![Screenshot](docs/images/screenshot.png)
+
 </div>
 
 ---
@@ -98,7 +100,8 @@ TuneHime/
 ├── electron-app/          # Electron 前端
 ├── python-backend/        # Python 后端
 ├── src/ai_live_tuner/     # 核心代码
-└── resources/             # 资源文件
+├── resources/             # 资源文件
+└── docs/                  # 截图
 ```
 
 ## 📋 系统要求
