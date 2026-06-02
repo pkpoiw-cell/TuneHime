@@ -66,7 +66,7 @@
       "installerIcon": "build/icon.ico",
       "uninstallerIcon": "build/icon.ico",
       "installerHeaderIcon": "build/icon.ico",
-      "license": "../LICENSE",
+      "license": "../LICENSE_CN.txt",
       "include": "installer.nsh",
       "language": "2052"
     }

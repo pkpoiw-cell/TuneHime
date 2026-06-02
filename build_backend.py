@@ -40,6 +40,8 @@ def build():
         return False
 
     # PyInstaller 参数
+    src_dir = os.path.join(PROJECT_DIR, 'src')
+
     args = [
         sys.executable, '-m', 'PyInstaller',
         ENTRY_FILE,
@@ -50,7 +52,14 @@ def build():
         '--workpath', BUILD_DIR,
         '--clean',                      # 清理临时文件
         '--noconfirm',                  # 不询问确认
+        # 添加 src 目录到路径
+        '--paths', src_dir,
         # 添加依赖
+        '--hidden-import', 'ai_live_tuner',
+        '--hidden-import', 'ai_live_tuner.audio_engine',
+        '--hidden-import', 'ai_live_tuner.dsp',
+        '--hidden-import', 'ai_live_tuner.logging_setup',
+        '--hidden-import', 'ai_live_tuner.settings',
         '--hidden-import', 'websockets',
         '--hidden-import', 'websockets.server',
         '--hidden-import', 'pedalboard',
