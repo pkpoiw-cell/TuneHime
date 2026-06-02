@@ -1,4 +1,0 @@
-numpy>=2.0
-sounddevice>=0.4.7
-pedalboard>=0.9.23
-websockets>=12.0
