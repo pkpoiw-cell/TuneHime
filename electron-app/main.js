@@ -1,5 +1,6 @@
 const { app, BrowserWindow, ipcMain, dialog } = require('electron');
 const path = require('path');
+const { spawn } = require('child_process');
 const Store = require('electron-store');
 const { validateActivationCode } = require('./activation');
 
@@ -7,6 +8,7 @@ const { validateActivationCode } = require('./activation');
 const store = new Store();
 
 let mainWindow = null;
+let serverProcess = null;
 const WS_PORT = 9876;
 
 // 试用期配置
@@ -14,16 +16,82 @@ const TRIAL_DAYS = 3;
 const TRIAL_MS = TRIAL_DAYS * 24 * 60 * 60 * 1000;
 
 /**
+ * 获取服务器路径
+ */
+function getServerPath() {
+  // 开发模式
+  if (process.argv.includes('--dev')) {
+    return path.join(__dirname, '..', 'python-backend', 'server.py');
+  }
+
+  // 打包后的路径
+  if (app.isPackaged) {
+    return path.join(process.resourcesPath, 'server', 'server.exe');
+  }
+
+  // 开发环境
+  return path.join(__dirname, '..', 'python-backend', 'server.py');
+}
+
+/**
+ * 启动 Python 后端服务器
+ */
+function startServer() {
+  const serverPath = getServerPath();
+
+  console.log('启动服务器:', serverPath);
+
+  // 判断是 .exe 还是 .py
+  if (serverPath.endsWith('.exe')) {
+    serverProcess = spawn(serverPath, [], {
+      cwd: path.dirname(serverPath),
+      stdio: 'pipe'
+    });
+  } else {
+    // 开发模式使用 py 命令
+    serverProcess = spawn('py', [serverPath], {
+      cwd: path.dirname(serverPath),
+      stdio: 'pipe'
+    });
+  }
+
+  serverProcess.stdout.on('data', (data) => {
+    console.log('Server stdout:', data.toString());
+  });
+
+  serverProcess.stderr.on('data', (data) => {
+    console.log('Server stderr:', data.toString());
+  });
+
+  serverProcess.on('error', (err) => {
+    console.error('服务器启动失败:', err);
+  });
+
+  serverProcess.on('close', (code) => {
+    console.log('服务器已关闭，退出码:', code);
+    serverProcess = null;
+  });
+}
+
+/**
+ * 停止服务器
+ */
+function stopServer() {
+  if (serverProcess) {
+    serverProcess.kill();
+    serverProcess = null;
+  }
+}
+
+/**
  * 获取激活状态
  */
 function getActivationStatus() {
-  // 检查是否已激活
   const isActivated = store.get('activated', false);
   if (isActivated) {
     return { status: 'activated', activatedAt: store.get('activatedAt') };
   }
 
-  // 检查试用期
   let firstLaunch = store.get('firstLaunch');
   if (!firstLaunch) {
     firstLaunch = Date.now();
@@ -85,11 +153,25 @@ function createWindow() {
   mainWindow.on('closed', () => { mainWindow = null; });
 }
 
-app.whenReady().then(createWindow);
+// 应用启动
+app.whenReady().then(() => {
+  startServer();
+  // 等待服务器启动后再打开窗口
+  setTimeout(createWindow, 1500);
+});
 
-app.on('window-all-closed', () => { app.quit(); });
+// 应用退出
+app.on('window-all-closed', () => {
+  stopServer();
+  app.quit();
+});
+
 app.on('activate', () => {
   if (BrowserWindow.getAllWindows().length === 0) createWindow();
+});
+
+app.on('before-quit', () => {
+  stopServer();
 });
 
 // 窗口控制
@@ -107,7 +189,6 @@ ipcMain.handle('get-ws-port', () => WS_PORT);
 ipcMain.handle('get-activation-status', () => getActivationStatus());
 ipcMain.handle('activate', (event, code) => activate(code));
 ipcMain.handle('reset-trial', () => {
-  // 重置试用期（仅用于测试，生产环境可删除）
   store.delete('firstLaunch');
   store.delete('activated');
   store.delete('activatedAt');

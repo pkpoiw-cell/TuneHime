@@ -1,17 +1,72 @@
 {
-  "name": "ai-live-tuner",
+  "name": "tunehime",
   "version": "1.0.0",
-  "description": "AI 直播修音 — 实时人声调音工具",
+  "description": "音姬 - 让每个主播都有天籁之音",
   "main": "main.js",
   "scripts": {
     "start": "electron .",
-    "dev": "electron . --dev"
+    "dev": "electron . --dev",
+    "build": "electron-builder --win",
+    "build:portable": "electron-builder --win portable",
+    "build:installer": "electron-builder --win nsis"
   },
   "dependencies": {
-    "electron": "^35.0.0",
     "electron-store": "^8.2.0",
     "ws": "^8.18.0"
   },
-  "author": "",
-  "license": "MIT"
+  "devDependencies": {
+    "electron": "^35.0.0",
+    "electron-builder": "^24.0.0"
+  },
+  "author": "pkpoiw",
+  "license": "MIT",
+  "build": {
+    "appId": "com.pkpoiw.tunehime",
+    "productName": "音姬 TuneHime",
+    "copyright": "Copyright © 2024 pkpoiw",
+    "directories": {
+      "output": "dist",
+      "buildResources": "build"
+    },
+    "files": [
+      "**/*",
+      "!**/node_modules/*/{CHANGELOG.md,README.md,README,readme.md,readme}",
+      "!**/node_modules/.cache/**",
+      "!dist/**",
+      "!build/**"
+    ],
+    "extraResources": [
+      {
+        "from": "../python-backend/dist/server.exe",
+        "to": "server/server.exe"
+      },
+      {
+        "from": "../resources/vb-cable",
+        "to": "vb-cable"
+      }
+    ],
+    "win": {
+      "target": [
+        {
+          "target": "nsis",
+          "arch": ["x64"]
+        }
+      ],
+      "icon": "build/icon.ico",
+      "artifactName": "TuneHime-Setup-${version}.${ext}"
+    },
+    "nsis": {
+      "oneClick": false,
+      "perMachine": true,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "shortcutName": "音姬 TuneHime",
+      "installerIcon": "build/icon.ico",
+      "uninstallerIcon": "build/icon.ico",
+      "installerHeaderIcon": "build/icon.ico",
+      "license": "../LICENSE",
+      "include": "installer.nsh"
+    }
+  }
 }
