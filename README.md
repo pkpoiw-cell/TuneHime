@@ -10,6 +10,8 @@
 
 ![Screenshot](docs/images/screenshot.png)
 
+![Screenshot2](docs/images/087e481f-5060-46e8-9df5-6c01ea0d5abe.png)
+
 </div>
 
 ---
