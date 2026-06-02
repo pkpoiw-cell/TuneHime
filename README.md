@@ -1,5 +1,6 @@
 <div align="center">
-
+  <img src="resources/logo.png" alt="icon" width="250"><br>
+  
 # 🎤 音姬 TuneHime
 
 **让每个主播都有天籁之音**
@@ -21,7 +22,6 @@
 | 🎵 **AI 实时修音** | 延迟 <50ms，实时修正音高 |
 | 🎯 **智能调号识别** | 自动识别歌曲调号，智能匹配 |
 | 🔌 **虚拟声卡路由** | 一键连接 OBS、直播伴侣等软件 |
-| 🎨 **精美界面** | 磨砂玻璃风格，粉白配色 |
 | 📦 **开箱即用** | 无需配置 Python 环境 |
 
 ## 📥 下载
@@ -35,8 +35,6 @@
 ### 方式二：便携版
 
 下载压缩包，解压后直接运行，无需安装：
-
-**[TuneHime-V0.6-Portable.zip](https://github.com/pkpoiw-cell/TuneHime/releases/download/V0.6/TuneHime-V0.6-Portable.zip)** (166 MB)
 
 > 💡 便携版需要手动安装 [VB-CABLE](https://vb-audio.com/Cable/) 才能使用虚拟声卡功能。
 
@@ -121,7 +119,7 @@ TuneHime/
 ## 🔗 相关链接
 
 - [VB-CABLE 下载](https://vb-audio.com/Cable/)
-- [问题反馈](https://github.com/pkpoiw-cell/TuneHime/issues)
+- [问题反馈] QQ:353045258
 
 ---
 
