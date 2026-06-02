@@ -8,9 +8,7 @@
 [![Platform](https://img.shields.io/badge/Platform-Windows-lightgrey.svg)](https://github.com/pkpoiw-cell/TuneHime/releases)
 [![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 
-![Screenshot](docs/images/screenshot.png)
-
-![Screenshot2](docs/images/087e481f-5060-46e8-9df5-6c01ea0d5abe.png)
+![Screenshot](docs/images/087e481f-5060-46e8-9df5-6c01ea0d5abe.png)
 
 </div>
 
