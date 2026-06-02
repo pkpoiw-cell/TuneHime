@@ -1,0 +1,61 @@
+__pycache__/
+*.pyc
+*.pyo
+dist/
+build/
+*.egg-info/
+.eggs/
+*.spec
+.pytest_cache/
+.mypy_cache/
+.venv/
+venv/
+*.log
+
+# Node.js
+node_modules/
+package-lock.json
+
+# OS
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+
+# IDE
+.vscode/
+.idea/
+
+# 敏感文件（激活码密钥）
+electron-app/activation.js
+
+# 构建产物
+release/
+*.exe
+*.dmg
+*.AppImage
+
+# 内部文档
+BUILD.md
+COMMERCIALIZATION.md
+MONETIZATION.md
+REDESIGN.md
+RELEASE_CHECKLIST.md
+UI_DESIGN.md
+LICENSE_CN.txt
+
+# 开发文件
+pyproject.toml
+requirements-dev.txt
+tests/
+launch.pyw
+run.bat
+download_vbcable.bat
+build.bat
+build_installer.bat
+build_release.bat
+build_backend.py
+docs/
+
+# 第三方驱动
+resources/vb-cable/
