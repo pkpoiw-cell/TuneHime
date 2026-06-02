@@ -53,7 +53,8 @@
         }
       ],
       "icon": "build/icon.ico",
-      "artifactName": "TuneHime-Setup-${version}.${ext}"
+      "artifactName": "TuneHime-Setup-${version}.${ext}",
+      "signAndEditExecutable": false
     },
     "nsis": {
       "oneClick": false,
@@ -67,7 +68,7 @@
       "installerHeaderIcon": "build/icon.ico",
       "license": "../LICENSE",
       "include": "installer.nsh",
-      "installerLanguages": ["SimpChinese"]
+      "language": "2052"
     }
   }
 }

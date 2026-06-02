@@ -4,9 +4,10 @@
 使用 PyInstaller 将 Python 后端打包成独立的 .exe 文件
 """
 
-import PyInstaller.__main__
+import subprocess
 import os
 import shutil
+import sys
 
 # 项目路径
 PROJECT_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -40,6 +41,7 @@ def build():
 
     # PyInstaller 参数
     args = [
+        sys.executable, '-m', 'PyInstaller',
         ENTRY_FILE,
         '--name', OUTPUT_NAME,
         '--onefile',                    # 打包成单个文件
@@ -67,7 +69,7 @@ def build():
     print(f'\n开始打包...\n')
 
     try:
-        PyInstaller.__main__.run(args)
+        result = subprocess.run(args, check=True, capture_output=False)
 
         # 检查输出
         output_path = os.path.join(DIST_DIR, f'{OUTPUT_NAME}.exe')
@@ -81,6 +83,9 @@ def build():
             print(f'\n打包失败: 输出文件不存在')
             return False
 
+    except subprocess.CalledProcessError as e:
+        print(f'\n打包失败: {e}')
+        return False
     except Exception as e:
         print(f'\n打包失败: {e}')
         return False
