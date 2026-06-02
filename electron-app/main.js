@@ -68,6 +68,7 @@ function createWindow() {
     minHeight: 680,
     frame: false,
     transparent: true,
+    title: '音姬 TuneHime',
     webPreferences: {
       preload: path.join(__dirname, 'preload.js'),
       nodeIntegration: false,
