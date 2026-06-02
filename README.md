@@ -1,5 +1,5 @@
 <div align="center">
-  <img src="resources/logo.png" alt="icon" width="200"><br>
+  <img src="resources/logo.png" alt="icon" width="250"><br>
   
 # 🎤 音姬 TuneHime
 
