@@ -59,14 +59,15 @@
       "oneClick": false,
       "perMachine": true,
       "allowToChangeInstallationDirectory": true,
-      "createDesktopShortcut": true,
-      "createStartMenuShortcut": true,
+      "createDesktopShortcut": false,
+      "createStartMenuShortcut": false,
       "shortcutName": "音姬 TuneHime",
       "installerIcon": "build/icon.ico",
       "uninstallerIcon": "build/icon.ico",
       "installerHeaderIcon": "build/icon.ico",
       "license": "../LICENSE",
-      "include": "installer.nsh"
+      "include": "installer.nsh",
+      "installerLanguages": ["SimpChinese"]
     }
   }
 }

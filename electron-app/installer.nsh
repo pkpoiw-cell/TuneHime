@@ -12,22 +12,18 @@
 !macroend
 
 !macro customInstall
-  ; 安装 VB-CABLE（如果未安装）
+  ; ========== VB-CABLE 安装 ==========
   ${If} $VB_CABLE_INSTALLED == "0"
     MessageBox MB_YESNO "音姬需要安装 VB-CABLE 虚拟声卡才能正常使用。$\n$\n是否现在安装？" IDYES install_vbcable IDNO skip_vbcable
 
     install_vbcable:
-      ; 显示安装说明
       MessageBox MB_OK "即将安装 VB-CABLE 虚拟声卡。$\n$\n安装过程中可能会弹出驱动安装确认框，请点击'安装'按钮。$\n$\n安装完成后，系统可能需要重启。"
 
-      ; 解压 VB-CABLE 安装文件
       SetOutPath "$TEMP\vb-cable"
       File /r "${BUILD_RESOURCES_DIR}\vb-cable\*.*"
 
-      ; 运行 VB-CABLE 安装程序
       ExecWait '"$TEMP\vb-cable\VBCABLE_Setup_x64.exe"'
 
-      ; 清理临时文件
       RMDir /r "$TEMP\vb-cable"
 
       MessageBox MB_OK "VB-CABLE 安装完成！$\n$\n如果系统提示需要重启，请在安装完成后重启电脑。"
@@ -39,19 +35,57 @@
     done_vbcable:
   ${EndIf}
 
-  ; 创建开始菜单快捷方式
-  CreateDirectory "$SMPROGRAMS\音姬 TuneHime"
-  CreateShortCut "$SMPROGRAMS\音姬 TuneHime\音姬 TuneHime.lnk" "$INSTDIR\音姬 TuneHime.exe"
-  CreateShortCut "$SMPROGRAMS\音姬 TuneHime\卸载音姬.lnk" "$INSTDIR\Uninstall 音姬 TuneHime.exe"
+  ; ========== 快捷方式选项 ==========
+  ; 弹出自定义页面让用户选择
+  !insertmacro MUI_HEADER_TEXT "快捷方式设置" "选择是否创建快捷方式"
+  nsDialogs::Create 1018
+  Pop $0
+
+  ${NSD_CreateCheckBox} 10 20 280 20 "创建桌面快捷方式"
+  Pop $CHECKBOX_DESKTOP
+  ${NSD_Check} $CHECKBOX_DESKTOP  ; 默认选中
+
+  ${NSD_CreateCheckBox} 10 50 280 20 "创建开始菜单快捷方式"
+  Pop $CHECKBOX_STARTMENU
+  ${NSD_Check} $CHECKBOX_STARTMENU  ; 默认选中
+
+  ${NSD_CreateCheckBox} 10 80 280 20 "开机自动启动"
+  Pop $CHECKBOX_AUTOSTART
+
+  nsDialogs::Show
+
+  ; 获取用户选择
+  ${NSD_GetState} $CHECKBOX_DESKTOP $DESKTOP_SHORTCUT
+  ${NSD_GetState} $CHECKBOX_STARTMENU $STARTMENU_SHORTCUT
+  ${NSD_GetState} $CHECKBOX_AUTOSTART $AUTOSTART
 
   ; 创建桌面快捷方式
-  CreateShortCut "$DESKTOP\音姬 TuneHime.lnk" "$INSTDIR\音姬 TuneHime.exe"
+  ${If} $DESKTOP_SHORTCUT == ${BST_CHECKED}
+    CreateShortCut "$DESKTOP\音姬 TuneHime.lnk" "$INSTDIR\音姬 TuneHime.exe"
+  ${EndIf}
+
+  ; 创建开始菜单快捷方式
+  ${If} $STARTMENU_SHORTCUT == ${BST_CHECKED}
+    CreateDirectory "$SMPROGRAMS\音姬 TuneHime"
+    CreateShortCut "$SMPROGRAMS\音姬 TuneHime\音姬 TuneHime.lnk" "$INSTDIR\音姬 TuneHime.exe"
+    CreateShortCut "$SMPROGRAMS\音姬 TuneHime\卸载音姬.lnk" "$INSTDIR\Uninstall 音姬 TuneHime.exe"
+  ${EndIf}
+
+  ; 开机自动启动
+  ${If} $AUTOSTART == ${BST_CHECKED}
+    WriteRegStr HKCU "SOFTWARE\Microsoft\Windows\CurrentVersion\Run" "TuneHime" '"$INSTDIR\音姬 TuneHime.exe"'
+  ${EndIf}
 !macroend
 
 !macro customUnInstall
-  ; 删除快捷方式
+  ; 删除桌面快捷方式
   Delete "$DESKTOP\音姬 TuneHime.lnk"
+
+  ; 删除开始菜单
   RMDir /r "$SMPROGRAMS\音姬 TuneHime"
+
+  ; 删除开机自启
+  DeleteRegValue HKCU "SOFTWARE\Microsoft\Windows\CurrentVersion\Run" "TuneHime"
 
   ; 询问是否卸载 VB-CABLE
   MessageBox MB_YESNO "是否同时卸载 VB-CABLE 虚拟声卡？$\n$\n注意：如果其他程序也在使用 VB-CABLE，请选择'否'。" IDYES uninstall_vbcable IDNO skip_uninstall_vbcable
@@ -72,3 +106,9 @@
 
 ; 变量
 Var VB_CABLE_INSTALLED
+Var CHECKBOX_DESKTOP
+Var CHECKBOX_STARTMENU
+Var CHECKBOX_AUTOSTART
+Var DESKTOP_SHORTCUT
+Var STARTMENU_SHORTCUT
+Var AUTOSTART
