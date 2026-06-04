@@ -30,7 +30,7 @@
 
 下载安装程序，一键安装，自动配置虚拟声卡：
 
-**[TuneHime-Setup-0.6.0.exe](https://github.com/pkpoiw-cell/TuneHime/releases/download/V0.6/TuneHime-Setup-0.6.0.exe)** (134 MB)
+**[TuneHime-Setup-0.6.0.exe](https://github.com/pkpoiw-cell/TuneHime/releases/download/TuneHime/TuneHime-Setup-0.6.0.exe)** (134 MB)
 
 ### 方式二：便携版
 
