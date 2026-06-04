@@ -7,42 +7,28 @@
 <link rel="stylesheet" href="styles/main.css">
 </head>
 <body>
-<!-- 激活页面覆盖层 -->
 <div class="activation-overlay" id="activation-overlay" style="display: none;">
   <div class="activation-card">
     <div class="activation-logo">♪</div>
     <h2 class="activation-title">音姬 TuneHime</h2>
-
-    <!-- 试用期状态 -->
     <div class="trial-section" id="trial-section">
-      <div class="trial-icon">⏰</div>
+      <div class="trial-icon">◇</div>
       <div class="trial-text" id="trial-text">试用期剩余 3 天</div>
     </div>
-
-    <!-- 试用期已过期 -->
     <div class="expired-section" id="expired-section" style="display: none;">
-      <div class="expired-icon">🔒</div>
+      <div class="expired-icon">!</div>
       <div class="expired-text">试用期已结束</div>
       <div class="expired-desc">请输入激活码继续使用</div>
     </div>
-
-    <!-- 激活码输入 -->
     <div class="activation-form">
-      <input type="text" class="activation-input" id="activation-input"
-             placeholder="请输入激活码 (XXXX-XXXX-XXXX-XXXX)" maxlength="19" autocomplete="off">
+      <input type="text" class="activation-input" id="activation-input" placeholder="XXXX-XXXX-XXXX-XXXX" maxlength="19" autocomplete="off">
       <button class="activation-btn" id="activation-btn">激活</button>
     </div>
-
-    <!-- 激活结果提示 -->
     <div class="activation-message" id="activation-message"></div>
-
-    <!-- 购买链接 -->
     <div class="purchase-link">
       <span>没有激活码？</span>
       <a href="#" id="purchase-link">点击购买</a>
     </div>
-
-    <!-- 跳过按钮（仅试用期内显示） -->
     <div class="skip-section" id="skip-section">
       <button class="skip-btn" id="skip-btn">继续试用</button>
     </div>
@@ -50,323 +36,345 @@
 </div>
 
 <div class="app">
-  <!-- 标题栏 -->
   <div class="titlebar">
     <div class="titlebar-left">
-      <div class="logo">♪</div>
+      <div class="logo">♥</div>
       <span class="titlebar-title">音姬 TuneHime</span>
     </div>
     <div class="titlebar-right">
-      <button class="titlebar-btn" id="btn-minimize">─</button>
-      <button class="titlebar-btn" id="btn-maximize">□</button>
-      <button class="titlebar-btn titlebar-close" id="btn-close">✕</button>
+      <button class="titlebar-btn" id="btn-minimize" aria-label="最小化">─</button>
+      <button class="titlebar-btn" id="btn-maximize" aria-label="最大化">□</button>
+      <button class="titlebar-btn titlebar-close" id="btn-close" aria-label="关闭">×</button>
     </div>
   </div>
 
-  <!-- 头部 -->
-  <div class="header">
-    <div class="header-title">
-      <div class="header-logo">♪</div>
-      <div>
-        <h1>音姬 TuneHime</h1>
-        <div class="header-subtitle">让每个主播都有天籁之音</div>
+  <div class="app-body">
+    <aside class="sidebar">
+      <div class="brand-mark">♥</div>
+      <nav class="tabs">
+        <button class="tab active" data-tab="live"><span>⌂</span>首页</button>
+        <button class="tab" data-tab="settings"><span>≋</span>修音</button>
+        <button class="tab" data-tab="test"><span>♪</span>测试</button>
+        <button class="tab" data-tab="route"><span>⌁</span>输出</button>
+      </nav>
+      <div class="sidebar-foot">
+        <button class="tab side-action" data-tab="preferences"><span>◉</span>设置</button>
       </div>
-    </div>
-    <div class="header-right">
-      <!-- 试用状态标签 -->
-      <div class="trial-badge" id="trial-badge" style="display: none;">
-        <span class="trial-badge-icon">⏰</span>
-        <span class="trial-badge-text" id="trial-badge-text">试用 3 天</span>
-      </div>
-      <!-- 已激活标签 -->
-      <div class="activated-badge" id="activated-badge" style="display: none;">
-        <span class="activated-badge-icon">✅</span>
-        <span class="activated-badge-text">已激活</span>
-      </div>
-      <div class="status-pill" id="status-pill">
-        <span class="status-dot"></span>
-        <span id="engine-status">连接中...</span>
-      </div>
-    </div>
-  </div>
+    </aside>
 
-  <!-- 标签页 -->
-  <div class="tabs">
-    <div class="tab active" data-tab="live">
-      <span class="tab-icon">🎤</span> 一键直播
-    </div>
-    <div class="tab" data-tab="settings">
-      <span class="tab-icon">⚙</span> 高级设置
-    </div>
-    <div class="tab" data-tab="test">
-      <span class="tab-icon">🎧</span> 效果测试
-    </div>
-    <div class="tab" data-tab="route">
-      <span class="tab-icon">🔌</span> 虚拟声卡
-    </div>
-  </div>
-
-  <!-- 内容面板 -->
-  <div class="tab-panels">
-    <!-- 一键直播 -->
-    <div class="tab-panel active" id="panel-live">
-      <div class="content">
-        <div class="left">
-          <div class="card">
-            <div class="card-title">
-              <span class="card-icon">🎤</span> 设备选择
-            </div>
-            <div class="device-row">
-              <label>输入</label>
-              <select class="device-select" id="input-device"></select>
-            </div>
-            <div class="device-row">
-              <label>输出</label>
-              <select class="device-select" id="output-device"></select>
-              <button class="pill-btn" id="btn-refresh-devices">刷新</button>
-            </div>
+    <main class="workspace">
+      <img class="mascot" src="../../resources/logo.png" alt="">
+      <header class="header">
+        <div class="page-title">
+          <h1>实时修音</h1>
+          <div class="header-subtitle">直播人声调音台</div>
+        </div>
+        <div class="header-right">
+          <div class="trial-badge" id="trial-badge" style="display: none;">
+            <span class="trial-badge-icon">◇</span>
+            <span class="trial-badge-text" id="trial-badge-text">试用 3 天</span>
           </div>
-
-          <div class="card">
-            <div class="card-title">
-              <span class="card-icon">✨</span> 自动模式
-            </div>
-            <label class="auto-check">
-              <input type="checkbox" id="auto-mode" checked>
-              自动识别调号并自动调参
-            </label>
-            <div class="auto-status" id="auto-status">
-              <span>♪</span> 自动识别已开启，点击一键开始即可
-            </div>
-            <div class="btn-row">
-              <button class="btn-primary" id="btn-start">
-                <span>♪</span> 一键开始直播修音
-              </button>
-              <button class="btn-secondary" id="btn-stop">停止</button>
-            </div>
+          <div class="activated-badge" id="activated-badge" style="display: none;">
+            <span class="activated-badge-icon">✓</span>
+            <span class="activated-badge-text">已激活</span>
           </div>
-
-          <div class="card">
-            <div class="card-title">
-              <span class="card-icon">📊</span> 实时反馈
-            </div>
-            <div class="feedback-row">
-              <span class="feedback-label">检测音高</span>
-              <span class="feedback-value" id="fb-pitch">-- Hz</span>
-            </div>
-            <div class="feedback-row">
-              <span class="feedback-label">目标音</span>
-              <span class="feedback-value" id="fb-target">--</span>
-            </div>
-            <div class="feedback-row">
-              <span class="feedback-label">修正量</span>
-              <span class="feedback-value" id="fb-shift">0.00 st</span>
-            </div>
-          </div>
-
-          <div class="card">
-            <div class="card-title">
-              <span class="card-icon">🎵</span> 频谱
-            </div>
-            <canvas id="spectrum-canvas" height="56"></canvas>
+          <div class="status-pill offline" id="status-pill">
+            <span class="status-dot"></span>
+            <span id="engine-status" role="status" aria-live="polite">连接中...</span>
           </div>
         </div>
+      </header>
 
-        <div class="right">
-          <div class="card">
-            <div class="card-title">
-              <span class="card-icon">🎯</span> 音高偏差
-            </div>
-            <div class="gauge-container">
-              <canvas id="gauge-canvas" width="250" height="130"></canvas>
-              <div class="gauge-note" id="gauge-note">--</div>
-              <div class="gauge-freq" id="gauge-freq">-- Hz</div>
-              <div class="gauge-cents" id="gauge-cents">0 ct</div>
-            </div>
-          </div>
-
-          <div class="card">
-            <div class="card-title">
-              <span class="card-icon">📈</span> 输出音量
-            </div>
-            <div class="meter-container">
-              <canvas id="meter-canvas" width="32" height="180"></canvas>
-              <div class="meter-labels">
-                <span>+3</span>
-                <span>0</span>
-                <span>-6</span>
-                <span>-12</span>
-                <span>-∞</span>
+      <div class="tab-panels">
+        <section class="tab-panel active" id="panel-live">
+          <div class="live-grid">
+            <section class="panel tuner-panel">
+              <div class="panel-head">
+                <div>
+                  <div class="panel-kicker">Live Tune</div>
+                  <h2>实时修音</h2>
+                  <p>麦克风输入 → 修音引擎 → 输出设备</p>
+                </div>
+                <label class="switch">
+                  <input type="checkbox" id="auto-mode" checked>
+                  <span></span>
+                </label>
               </div>
-            </div>
+
+              <div class="gauge-ring">
+                <canvas id="gauge-canvas" width="260" height="150"></canvas>
+                <div class="gauge-core">
+                  <div class="gauge-note" id="gauge-note">--</div>
+                  <div class="gauge-label">修音强度</div>
+                  <div class="gauge-cents" id="gauge-cents">0 ct</div>
+                </div>
+              </div>
+
+              <div class="quick-sliders">
+                <div class="slider-row">
+                  <label>音高校正</label>
+                  <input type="range" class="slider" id="sl-amount" min="0" max="100" value="70">
+                  <span class="slider-val" id="sv-amount">0.70</span>
+                </div>
+                <div class="slider-row">
+                  <label>人声美化</label>
+                  <input type="range" class="slider" id="sl-bright" min="0" max="100" value="25">
+                  <span class="slider-val" id="sv-bright">0.25</span>
+                </div>
+                <div class="slider-row">
+                  <label>响度增强</label>
+                  <input type="range" class="slider" id="sl-comp" min="0" max="100" value="40">
+                  <span class="slider-val" id="sv-comp">0.40</span>
+                </div>
+              </div>
+
+              <div class="transport">
+                <button class="btn-primary" id="btn-start"><span>♪</span>开始直播修音</button>
+                <button class="btn-secondary" id="btn-stop">停止</button>
+              </div>
+            </section>
+
+            <section class="panel effects-panel">
+              <div class="panel-head compact">
+                <div>
+                  <div class="panel-kicker">Preset</div>
+                  <h2>音效库</h2>
+                </div>
+                <select class="device-select small" id="preset-select">
+                  <option>自然</option>
+                  <option selected>流行</option>
+                  <option>电音</option>
+                </select>
+              </div>
+              <div class="effect-grid">
+                <button class="effect-tile" id="btn-apply-preset"><span>♧</span>应用</button>
+                <button class="effect-tile preset-tile" data-preset="自然"><span>♡</span>自然</button>
+                <button class="effect-tile preset-tile" data-preset="流行"><span>♬</span>流行</button>
+                <button class="effect-tile preset-tile" data-preset="电音"><span>✦</span>电音</button>
+                <button class="effect-tile" id="btn-detect-key"><span>⌁</span>识别调号</button>
+                <button class="effect-tile" id="btn-save-preset"><span>＋</span>保存当前</button>
+              </div>
+            </section>
+
+            <section class="panel device-panel">
+              <div class="panel-head compact">
+                <div>
+                  <div class="panel-kicker">Route</div>
+                  <h2>设备链路</h2>
+                </div>
+                <button class="pill-btn" id="btn-refresh-devices">刷新</button>
+              </div>
+              <div class="device-row">
+                <label>输入</label>
+                <select class="device-select" id="input-device"></select>
+              </div>
+              <div class="device-row">
+                <label>输出</label>
+                <select class="device-select" id="output-device"></select>
+              </div>
+              <div class="auto-status" id="auto-status" role="status" aria-live="polite"><span>♪</span> 自动识别已开启，点击开始即可</div>
+            </section>
+
+            <section class="panel feedback-panel">
+              <div class="panel-head compact">
+                <div>
+                  <div class="panel-kicker">Monitor</div>
+                  <h2>实时反馈</h2>
+                </div>
+                <div class="gauge-freq" id="gauge-freq">-- Hz</div>
+              </div>
+              <div class="feedback-row">
+                <span class="feedback-label">检测音高</span>
+                <span class="feedback-value" id="fb-pitch">-- Hz</span>
+              </div>
+              <div class="feedback-row">
+                <span class="feedback-label">目标音</span>
+                <span class="feedback-value" id="fb-target">--</span>
+              </div>
+              <div class="feedback-row">
+                <span class="feedback-label">修正量</span>
+                <span class="feedback-value" id="fb-shift">0.00 st</span>
+              </div>
+              <div class="meter-strip">
+                <canvas id="meter-canvas" width="36" height="120"></canvas>
+                <canvas id="spectrum-canvas" height="56"></canvas>
+              </div>
+            </section>
           </div>
-        </div>
+        </section>
+
+        <section class="tab-panel" id="panel-settings">
+          <div class="settings-grid">
+            <section class="panel">
+              <div class="panel-head compact"><div><div class="panel-kicker">Pitch</div><h2>调号与修音</h2></div></div>
+              <div class="param-row">
+                <label>调号</label>
+                <select class="device-select" id="param-root">
+                  <option>C</option><option>C#</option><option>D</option><option>D#</option>
+                  <option>E</option><option>F</option><option>F#</option><option>G</option>
+                  <option>G#</option><option>A</option><option>A#</option><option>B</option>
+                </select>
+                <label>调式</label>
+                <select class="device-select" id="param-scale">
+                  <option>大调</option><option>小调</option><option>半音阶</option>
+                </select>
+              </div>
+              <div class="slider-row"><label>修音速度</label><input type="range" class="slider" id="sl-speed" min="1" max="100" value="25"><span class="slider-val" id="sv-speed">0.25</span></div>
+              <div class="slider-row"><label>干湿比</label><input type="range" class="slider" id="sl-mix" min="0" max="100" value="80"><span class="slider-val" id="sv-mix">0.80</span></div>
+              <label class="auto-check"><input type="checkbox" id="bypass"> 旁路修音</label>
+            </section>
+
+            <section class="panel">
+              <div class="panel-head compact"><div><div class="panel-kicker">Voice</div><h2>人声处理</h2></div></div>
+              <div class="slider-row"><label>噪声门</label><input type="range" class="slider" id="sl-gate" min="0" max="100" value="25"><span class="slider-val" id="sv-gate">0.25</span></div>
+              <div class="slider-row"><label>齿音消除</label><input type="range" class="slider" id="sl-deess" min="0" max="100" value="30"><span class="slider-val" id="sv-deess">0.30</span></div>
+              <div class="slider-row"><label>混响</label><input type="range" class="slider" id="sl-reverb" min="0" max="100" value="15"><span class="slider-val" id="sv-reverb">0.15</span></div>
+              <div class="slider-row"><label>增益</label><input type="range" class="slider" id="sl-gain" min="20" max="200" value="100"><span class="slider-val" id="sv-gain">1.00</span></div>
+            </section>
+          </div>
+        </section>
+
+        <section class="tab-panel" id="panel-test">
+          <div class="utility-layout">
+            <section class="panel wide-panel">
+              <div class="panel-head compact"><div><div class="panel-kicker">Compare</div><h2>效果测试</h2></div></div>
+              <p class="panel-desc">录制 5 秒人声，并用当前参数生成处理后的版本。</p>
+              <div class="test-status" id="test-status" role="status" aria-live="polite">尚未录制测试音频</div>
+              <div class="transport wrap">
+                <button class="btn-primary" id="btn-record"><span>●</span>录制 5 秒</button>
+                <button class="btn-secondary" id="btn-play-original">播放原声</button>
+                <button class="btn-secondary" id="btn-play-processed">播放处理后</button>
+                <button class="btn-secondary" id="btn-play-ab">A/B 对比</button>
+              </div>
+            </section>
+          </div>
+        </section>
+
+        <section class="tab-panel" id="panel-route">
+          <div class="utility-layout">
+            <section class="panel wide-panel">
+              <div class="panel-head compact"><div><div class="panel-kicker">Output</div><h2>虚拟声卡</h2></div></div>
+              <p class="panel-desc">输出选择 CABLE Input / Voicemeeter Input，直播软件麦克风选择对应 Output。</p>
+              <div class="test-status" id="route-status" role="status" aria-live="polite">选择虚拟声卡输出后，可发送测试音</div>
+              <div class="transport wrap">
+                <button class="btn-primary" id="btn-find-virtual"><span>⌕</span>自动查找虚拟声卡</button>
+                <button class="btn-secondary" id="btn-test-tone">发送 1 秒测试音</button>
+                <button class="btn-secondary" id="btn-refresh-devices2">刷新设备</button>
+              </div>
+              <div class="steps">
+                <div class="step"><span class="step-num">1</span>本软件输出选择 CABLE Input</div>
+                <div class="step"><span class="step-num">2</span>直播软件麦克风选择 CABLE Output</div>
+                <div class="step"><span class="step-num">3</span>发送测试音并观察直播软件音量条</div>
+              </div>
+            </section>
+          </div>
+        </section>
+
+        <section class="tab-panel" id="panel-preferences">
+          <div class="settings-grid">
+            <section class="panel">
+              <div class="panel-head compact"><div><div class="panel-kicker">General</div><h2>通用设置</h2></div></div>
+              <label class="auto-check"><input type="checkbox" id="pref-autostart"> 开机自动启动</label>
+              <label class="auto-check"><input type="checkbox" id="pref-minimize-to-tray" checked> 关闭时最小化到系统托盘</label>
+              <label class="auto-check"><input type="checkbox" id="pref-start-minimized"> 启动时最小化窗口</label>
+              <label class="auto-check"><input type="checkbox" id="pref-check-update" checked> 启动时检查更新</label>
+            </section>
+
+            <section class="panel">
+              <div class="panel-head compact"><div><div class="panel-kicker">Audio</div><h2>音频设置</h2></div></div>
+              <div class="param-row">
+                <label>采样率</label>
+                <select class="device-select" id="pref-sample-rate">
+                  <option value="44100">44100 Hz</option>
+                  <option value="48000" selected>48000 Hz</option>
+                  <option value="96000">96000 Hz</option>
+                </select>
+              </div>
+              <div class="param-row">
+                <label>缓冲区大小</label>
+                <select class="device-select" id="pref-buffer-size">
+                  <option value="512">512</option>
+                  <option value="1024">1024</option>
+                  <option value="2048" selected>2048</option>
+                  <option value="4096">4096</option>
+                </select>
+              </div>
+              <label class="auto-check"><input type="checkbox" id="pref-low-latency"> 低延迟模式（可能增加 CPU 占用）</label>
+            </section>
+
+            <section class="panel">
+              <div class="panel-head compact"><div><div class="panel-kicker">Interface</div><h2>界面设置</h2></div></div>
+              <div class="param-row">
+                <label>主题</label>
+                <select class="device-select" id="pref-theme">
+                  <option value="auto">跟随系统</option>
+                  <option value="light" selected>浅色</option>
+                  <option value="dark">深色</option>
+                </select>
+              </div>
+              <div class="param-row">
+                <label>语言</label>
+                <select class="device-select" id="pref-language">
+                  <option value="zh" selected>简体中文</option>
+                  <option value="en">English</option>
+                </select>
+              </div>
+              <label class="auto-check"><input type="checkbox" id="pref-show-fps"> 显示帧率（调试用）</label>
+            </section>
+
+            <section class="panel">
+              <div class="panel-head compact"><div><div class="panel-kicker">Advanced</div><h2>高级设置</h2></div></div>
+              <div class="param-row">
+                <label>日志级别</label>
+                <select class="device-select" id="pref-log-level">
+                  <option value="error">仅错误</option>
+                  <option value="warn">警告</option>
+                  <option value="info" selected>信息</option>
+                  <option value="debug">调试</option>
+                </select>
+              </div>
+              <div class="transport wrap">
+                <button class="btn-secondary" id="btn-open-log"><span>📂</span>打开日志目录</button>
+                <button class="btn-secondary" id="btn-reset-settings"><span>↺</span>恢复默认设置</button>
+              </div>
+            </section>
+
+            <section class="panel">
+              <div class="panel-head compact"><div><div class="panel-kicker">License</div><h2>激活信息</h2></div></div>
+              <div class="feedback-row">
+                <span class="feedback-label">授权状态</span>
+                <span class="feedback-value" id="pref-license-status">试用中</span>
+              </div>
+              <div class="feedback-row">
+                <span class="feedback-label">剩余时间</span>
+                <span class="feedback-value" id="pref-license-remaining">3 天</span>
+              </div>
+              <div class="transport wrap">
+                <button class="btn-primary" id="btn-activate"><span>🔑</span>输入激活码</button>
+                <button class="btn-secondary" id="btn-purchase"><span>🛒</span>购买授权</button>
+              </div>
+            </section>
+
+            <section class="panel">
+              <div class="panel-head compact"><div><div class="panel-kicker">About</div><h2>关于音姬</h2></div></div>
+              <div class="feedback-row">
+                <span class="feedback-label">版本</span>
+                <span class="feedback-value">V0.6.0</span>
+              </div>
+              <div class="feedback-row">
+                <span class="feedback-label">开发者</span>
+                <span class="feedback-value">pkpoiw</span>
+              </div>
+              <div class="transport wrap">
+                <button class="btn-secondary" id="btn-check-update"><span>🔄</span>检查更新</button>
+                <button class="btn-secondary" id="btn-website"><span>🌐</span>官方网站</button>
+                <button class="btn-secondary" id="btn-github"><span>⭐</span>GitHub</button>
+              </div>
+            </section>
+          </div>
+        </section>
       </div>
-    </div>
-
-    <!-- 高级设置 -->
-    <div class="tab-panel" id="panel-settings">
-      <div class="content">
-        <div class="settings-grid">
-          <div class="card">
-            <div class="card-title">
-              <span class="card-icon">🎛</span> 修音参数
-            </div>
-            <div class="param-row">
-              <label>调号</label>
-              <select class="device-select" id="param-root">
-                <option>C</option><option>C#</option><option>D</option><option>D#</option>
-                <option>E</option><option>F</option><option>F#</option><option>G</option>
-                <option>G#</option><option>A</option><option>A#</option><option>B</option>
-              </select>
-              <label>调式</label>
-              <select class="device-select" id="param-scale">
-                <option>大调</option><option>小调</option><option>半音阶</option>
-              </select>
-              <button class="pill-btn" id="btn-detect-key">智能识别</button>
-            </div>
-            <div class="slider-row">
-              <label>修音强度</label>
-              <input type="range" class="slider" id="sl-amount" min="0" max="100" value="70">
-              <span class="slider-val" id="sv-amount">0.70</span>
-            </div>
-            <div class="slider-row">
-              <label>修音速度</label>
-              <input type="range" class="slider" id="sl-speed" min="1" max="100" value="25">
-              <span class="slider-val" id="sv-speed">0.25</span>
-            </div>
-            <div class="slider-row">
-              <label>干湿比</label>
-              <input type="range" class="slider" id="sl-mix" min="0" max="100" value="80">
-              <span class="slider-val" id="sv-mix">0.80</span>
-            </div>
-          </div>
-
-          <div class="card">
-            <div class="card-title">
-              <span class="card-icon">🔊</span> 人声处理
-            </div>
-            <div class="slider-row">
-              <label>噪声门</label>
-              <input type="range" class="slider" id="sl-gate" min="0" max="100" value="25">
-              <span class="slider-val" id="sv-gate">0.25</span>
-            </div>
-            <div class="slider-row">
-              <label>压缩</label>
-              <input type="range" class="slider" id="sl-comp" min="0" max="100" value="40">
-              <span class="slider-val" id="sv-comp">0.40</span>
-            </div>
-            <div class="slider-row">
-              <label>亮度</label>
-              <input type="range" class="slider" id="sl-bright" min="0" max="100" value="25">
-              <span class="slider-val" id="sv-bright">0.25</span>
-            </div>
-            <div class="slider-row">
-              <label>齿音消除</label>
-              <input type="range" class="slider" id="sl-deess" min="0" max="100" value="30">
-              <span class="slider-val" id="sv-deess">0.30</span>
-            </div>
-            <div class="slider-row">
-              <label>混响</label>
-              <input type="range" class="slider" id="sl-reverb" min="0" max="100" value="15">
-              <span class="slider-val" id="sv-reverb">0.15</span>
-            </div>
-          </div>
-
-          <div class="card">
-            <div class="card-title">
-              <span class="card-icon">📦</span> 预设
-            </div>
-            <div class="preset-row">
-              <select class="device-select" id="preset-select">
-                <option>自然</option>
-                <option selected>流行</option>
-                <option>电音</option>
-              </select>
-              <button class="pill-btn" id="btn-apply-preset">应用</button>
-              <button class="pill-btn" id="btn-save-preset">保存</button>
-              <button class="pill-btn" id="btn-del-preset">删除</button>
-            </div>
-            <div class="slider-row" style="margin-top:16px">
-              <label>增益</label>
-              <input type="range" class="slider" id="sl-gain" min="20" max="200" value="100">
-              <span class="slider-val" id="sv-gain">1.00</span>
-            </div>
-            <label class="auto-check" style="margin-top:12px">
-              <input type="checkbox" id="bypass"> 旁路修音
-            </label>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- 效果测试 -->
-    <div class="tab-panel" id="panel-test">
-      <div class="content">
-        <div class="card" style="max-width:700px">
-          <div class="card-title">
-            <span class="card-icon">🎧</span> 录音对比测试
-          </div>
-          <p class="card-desc">
-            录 5 秒人声，软件会用当前参数生成处理后版本。对比原声和修音效果，再决定是否用于直播。
-          </p>
-          <div class="test-status" id="test-status">尚未录制测试音频</div>
-          <div class="btn-row">
-            <button class="btn-primary" id="btn-record">
-              <span>⏺</span> 录制 5 秒
-            </button>
-            <button class="btn-secondary" id="btn-play-original">播放原声</button>
-            <button class="btn-secondary" id="btn-play-processed">播放处理后</button>
-            <button class="btn-secondary" id="btn-play-ab">A/B 对比</button>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- 虚拟声卡 -->
-    <div class="tab-panel" id="panel-route">
-      <div class="content">
-        <div class="card" style="max-width:700px">
-          <div class="card-title">
-            <span class="card-icon">🔌</span> 虚拟声卡模式
-          </div>
-          <p class="card-desc">
-            选择 CABLE Input / Voicemeeter Input 后，直播软件选择对应 Output，获得类似虚拟麦克风的路由效果。
-          </p>
-          <div class="test-status" id="route-status">选择虚拟声卡输出后，可发送测试音</div>
-          <div class="btn-row">
-            <button class="btn-primary" id="btn-find-virtual">
-              <span>🔍</span> 自动查找虚拟声卡
-            </button>
-            <button class="btn-secondary" id="btn-test-tone">发送 1 秒测试音</button>
-            <button class="btn-secondary" id="btn-refresh-devices2">刷新设备</button>
-          </div>
-        </div>
-        <div class="card" style="max-width:700px; margin-top:16px">
-          <div class="card-title">
-            <span class="card-icon">📖</span> 直播软件设置
-          </div>
-          <div class="steps">
-            <div class="step">
-              <span class="step-num">1</span>
-              本软件"输出"选择 CABLE Input
-            </div>
-            <div class="step">
-              <span class="step-num">2</span>
-              OBS/直播伴侣"麦克风"选择 CABLE Output
-            </div>
-            <div class="step">
-              <span class="step-num">3</span>
-              点击"发送 1 秒测试音"，在直播软件音量条看到跳动即可
-            </div>
-            <div class="step">
-              <span class="step-num">4</span>
-              回到"一键直播"，点击"一键开始直播修音"
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+    </main>
   </div>
 </div>
 

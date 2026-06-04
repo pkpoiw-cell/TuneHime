@@ -1,6 +1,6 @@
 {
   "name": "tunehime",
-  "version": "0.6.0",
+  "version": "0.7.0",
   "description": "音姬 - 让每个主播都有天籁之音",
   "main": "main.js",
   "scripts": {
